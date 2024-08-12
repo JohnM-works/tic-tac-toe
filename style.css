@@ -1,0 +1,23 @@
+.gameboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.square {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    width: 25%;
+    height: 70%;
+    text-align: center;
+    font-size: 80px;
+}
+
+h1 {
+    color: blue;
+}
