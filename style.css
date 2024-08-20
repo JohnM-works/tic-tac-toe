@@ -1,3 +1,5 @@
+
+
 .gameboard {
     display: flex;
     flex-wrap: wrap;
@@ -11,13 +13,61 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    border: 2px solid black;
     width: 25%;
     height: 70%;
     text-align: center;
-    font-size: 80px;
+    font-size: 100px;
 }
 
-h1 {
-    color: blue;
+#square-0 {
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
 }
+
+#square-1 {
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+}
+
+#square-2 {
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+}
+
+#square-3 {
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    border-top: 2px solid black;
+}
+
+#square-4 {
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+}
+
+#square-5 {
+    border-bottom: 2px solid black;
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+}
+
+
+#square-6 {
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+}
+
+#square-7 {
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+#square-8 {
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+}
+
