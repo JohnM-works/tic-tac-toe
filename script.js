@@ -1,3 +1,11 @@
+const displayController = (() => {
+  const displayMessage = (message) => {
+    document.querySelector(".display-result").textContent = message;
+  };
+
+  return { displayMessage };
+})();
+
 const Gameboard = (() => {
   let gameboard = ["", "", "", "", "", "", "", "", ""];
 
@@ -43,6 +51,7 @@ const Game = (() => {
     players = [
       createPlayer(document.querySelector("#player1").value, "X"),
       createPlayer(document.querySelector("#player2").value, "O"),
+      0,
     ];
 
     currentPlayerIndex = 0;
@@ -62,19 +71,19 @@ const Game = (() => {
     }
 
     let index = parseInt(event.target.id.split("-")[1]);
-
     if (Gameboard.getGameboard()[index] !== "") return;
-
     Gameboard.update(index, players[currentPlayerIndex].mark);
 
     if (
       checkWInner(Gameboard.getGameboard(), players[currentPlayerIndex].mark)
     ) {
       gameOver = true;
-      alert(`${players[currentPlayerIndex].name} Won!`);
+      displayController.displayMessage(
+        `${players[currentPlayerIndex].name} Won!`
+      );
     } else if (checkForTie(Gameboard.getGameboard())) {
       gameOver = true;
-      alert("it's a tie");
+      displayController.displayMessage("It's a Tie!");
     }
 
     currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
@@ -84,7 +93,9 @@ const Game = (() => {
     for (let i = 0; i < 9; i++) {
       Gameboard.update(i, "");
     }
+    gameOver = false;
     Gameboard.render();
+    displayController.displayMessage("");
   };
 
   return {
@@ -119,8 +130,6 @@ function checkForTie(board) {
   return board.every((cell) => cell !== "");
 }
 
-const modal = document.querySelector(".modal");
-
 const restartButton = document.querySelector(".restart-btn");
 restartButton.addEventListener("click", () => {
   Game.restart();
@@ -129,7 +138,8 @@ restartButton.addEventListener("click", () => {
 const startButton = document.querySelector(".start-btn");
 startButton.addEventListener("click", () => {
   Game.start();
-  modal.close();
+  modalStart.style.visibility = "hidden";
 });
 
-modal.show();
+const modalStart = document.querySelector(".start-screen");
+modalStart.style.visibility = "visible";
