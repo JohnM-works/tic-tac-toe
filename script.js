@@ -1,6 +1,6 @@
 const displayController = (() => {
   const displayMessage = (message) => {
-    document.querySelector(".display-result").textContent = message;
+    document.querySelector(".player-turn-message").textContent = message;
   };
 
   return { displayMessage };
@@ -48,6 +48,8 @@ const Game = (() => {
   let gameOver;
 
   const start = () => {
+    restart();
+
     players = [
       createPlayer(document.querySelector("#player1").value, "X"),
       createPlayer(document.querySelector("#player2").value, "O"),
@@ -56,6 +58,7 @@ const Game = (() => {
 
     currentPlayerIndex = 0;
     gameOver = false;
+
     Gameboard.render();
 
     const squares = document.querySelectorAll(".square");
@@ -81,9 +84,11 @@ const Game = (() => {
       displayController.displayMessage(
         `${players[currentPlayerIndex].name} Won!`
       );
+      //modalStart.style.visibility = "visible";
     } else if (checkForTie(Gameboard.getGameboard())) {
       gameOver = true;
       displayController.displayMessage("It's a Tie!");
+      //modalStart.style.visibility = "visible";
     }
 
     currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
@@ -133,12 +138,24 @@ function checkForTie(board) {
 const restartButton = document.querySelector(".restart-btn");
 restartButton.addEventListener("click", () => {
   Game.restart();
+  modalStart.style.visibility = "hidden";
 });
 
 const startButton = document.querySelector(".start-btn");
 startButton.addEventListener("click", () => {
-  Game.start();
-  modalStart.style.visibility = "hidden";
+  const playerOne = document.querySelector("#player1");
+  const playerTwo = document.querySelector("#player2");
+  const startMessage = document.querySelector(".start-message");
+
+  if (playerOne.value === "") {
+    startMessage.textContent = "Enter Player 1 Name!";
+  } else if (playerTwo.value === "") {
+    startMessage.textContent = "Enter Player 2 Name!";
+  } else {
+    Game.start();
+    modalStart.style.visibility = "hidden";
+    startMessage.textContent = "";
+  }
 });
 
 const modalStart = document.querySelector(".start-screen");
