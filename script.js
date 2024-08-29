@@ -1,9 +1,13 @@
 const displayController = (() => {
   const displayMessage = (message) => {
-    document.querySelector(".player-turn-message").textContent = message;
+    document.querySelector(".display-result").textContent = message;
   };
 
-  return { displayMessage };
+  const playerDisplayMessage = (playerDisplay) => {
+    document.querySelector(".player-turn-message").textContent = playerDisplay;
+  };
+
+  return { displayMessage, playerDisplayMessage };
 })();
 
 const Gameboard = (() => {
@@ -53,11 +57,17 @@ const Game = (() => {
     players = [
       createPlayer(document.querySelector("#player1").value, "X"),
       createPlayer(document.querySelector("#player2").value, "O"),
-      0,
     ];
 
     currentPlayerIndex = 0;
     gameOver = false;
+
+    displayController.playerDisplayMessage(
+      `${players[currentPlayerIndex].name} Turns!` +
+        " ( " +
+        `${players[currentPlayerIndex].mark}` +
+        " )"
+    );
 
     Gameboard.render();
 
@@ -84,14 +94,19 @@ const Game = (() => {
       displayController.displayMessage(
         `${players[currentPlayerIndex].name} Won!`
       );
-      //modalStart.style.visibility = "visible";
     } else if (checkForTie(Gameboard.getGameboard())) {
       gameOver = true;
       displayController.displayMessage("It's a Tie!");
-      //modalStart.style.visibility = "visible";
     }
 
     currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+
+    displayController.playerDisplayMessage(
+      `${players[currentPlayerIndex].name} Turns!` +
+        " ( " +
+        `${players[currentPlayerIndex].mark}` +
+        " )"
+    );
   };
 
   const restart = () => {
@@ -154,9 +169,9 @@ startButton.addEventListener("click", () => {
   } else {
     Game.start();
     modalStart.style.visibility = "hidden";
-    startMessage.textContent = "";
   }
 });
 
+const playerResult = document.querySelector(".playerResult-modal");
 const modalStart = document.querySelector(".start-screen");
-modalStart.style.visibility = "visible";
+modalStart.style.visibility = "start";

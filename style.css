@@ -121,6 +121,34 @@ body {
     cursor: pointer;
 }
 
+.playerResult-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 50px;
+}
+
+.display-result {
+    font-size: 30px;
+    color: white;
+}
+
+.restart-btn {
+    background-color: RGB(39,76,67);
+    border: 3px solid white;
+    border-radius: 30px;
+    padding: 10px;
+
+    margin-top: 50px;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    font-family: "Fredericka the Great", serif;
+    color: white;
+    width: 130px;
+    cursor: pointer;
+}
+
 .gameboard {
     display: grid;
     align-items: center;
