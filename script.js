@@ -63,7 +63,7 @@ const Game = (() => {
     gameOver = false;
 
     displayController.playerDisplayMessage(
-      `${players[currentPlayerIndex].name} Turns!` +
+      `It's your turn ${players[currentPlayerIndex].name}!` +
         " ( " +
         `${players[currentPlayerIndex].mark}` +
         " )"
@@ -102,7 +102,7 @@ const Game = (() => {
     currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
 
     displayController.playerDisplayMessage(
-      `${players[currentPlayerIndex].name} Turns!` +
+      `It's your turn ${players[currentPlayerIndex].name}!` +
         " ( " +
         `${players[currentPlayerIndex].mark}` +
         " )"
