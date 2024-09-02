@@ -96,7 +96,7 @@ const Game = (() => {
         " )"
     );
 
-    displayController.rounds("Round" + " " + 1);
+    //displayController.rounds("Round" + " " + 1);
     displayController.player1Score(players[0].name + ": " + playerOneScore);
     displayController.player2Score(players[1].name + ": " + playerTwoScore);
 
@@ -180,7 +180,7 @@ const Game = (() => {
     currentPlayerIndex = 0;
     playerOneScore = 0;
     playerTwoScore = 0;
-    round = 1;
+    //round = 1;
     players[0].score = 0;
     players[1].score = 0;
     displayController.player1Score(players[0].name + ": " + 0);
@@ -195,7 +195,7 @@ const Game = (() => {
     }
     gameOver = false;
     round++;
-    displayController.rounds("Round" + " " + round);
+    //displayController.rounds("Round" + " " + round);
   };
 
   return {
