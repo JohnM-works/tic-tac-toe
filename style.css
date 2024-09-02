@@ -37,14 +37,15 @@ body {
 .title {
     text-align: center;
     color: white;
-    margin-top: 20px;
-    font-size: 3em;
+    margin: 20px;
+    font-size: 3.5em;
 }
 
 .player-turn-message {
     color: white;
-    font-size: 30px;
-    margin: 50px;
+    font-size: 1.5em;
+    margin: 30px;
+    text-align: center;
 }
 
 .start-screen {
@@ -95,7 +96,6 @@ body {
     color: white;
 }
 
-
 .controls input[type="text"]:focus {
     outline: none;
     border: 3px solid rgb(9, 195, 219);
@@ -126,7 +126,37 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin: 50px;
+    margin: 20px;
+}
+
+.winner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+
+    width: 100vw;
+    height: 100vh;
+    background-color: RGB(39,76,67);
+    border: tan solid 22px;
+	border-top: #bda27e solid 22px;
+	border-left: #b19876 solid 22px;
+	border-bottom: #c9ad86 solid 22px;
+}
+
+.winner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.display-winner {
+    font-size: 3em;
+    color: white;
+    margin: 20px;
 }
 
 .display-result {
@@ -136,9 +166,10 @@ body {
 
 .buttons {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
 }
 
 .restart-btn {
@@ -146,14 +177,14 @@ body {
     border: 3px solid white;
     border-radius: 30px;
     padding: 10px;
-
-    margin: 50px 30px 0 0;
+   
     font-size: 15px;
     letter-spacing: 1.5px;
     font-family: "Fredericka the Great", serif;
     color: white;
     width: 130px;
     cursor: pointer;
+    margin: 5px;
 }
 
 .new-game {
@@ -162,7 +193,7 @@ body {
     border-radius: 30px;
     padding: 10px;
 
-    margin-top: 50px;
+    margin: 5px;
     font-size: 15px;
     letter-spacing: 1.5px;
     font-family: "Fredericka the Great", serif;
@@ -171,10 +202,72 @@ body {
     cursor: pointer;
 }
 
+.rematch {
+    background-color: RGB(39,76,67);
+    border: 3px solid white;
+    border-radius: 30px;
+    padding: 10px;
+
+    margin: 5px;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    font-family: "Fredericka the Great", serif;
+    color: white;
+    width: 130px;
+    cursor: pointer;
+}
+
+
+.next-round:disabled {
+    background-color: rgb(2, 53, 44);
+    border: 3px solid rgb(104, 104, 104);
+    color: rgb(104, 104, 104);
+}
+
+.next-round {
+    background-color: RGB(39,76,67);
+    border: 3px solid white;
+    border-radius: 30px;
+    padding: 10px;
+    text-align: center;
+
+    margin: 5px;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+    font-family: "Fredericka the Great", serif;
+    color: white;
+    width: 130px;
+    cursor: pointer;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+    border: 1px solid white;
+    width: 100%;
+    margin: 20px;
+}
+
+.player1-scores,
+.player2-scores,
+.round {
+    color: white;
+    font-size: 1.5em;
+    padding: 20px;
+}
+
+.round {
+    font-size: 2em;
+}
+
 .gameboard {
     display: grid;
     align-items: center;
     grid-template-columns: repeat(3, minmax(120px, 1fr));
+    margin: 20px;
 }
 
 .square {

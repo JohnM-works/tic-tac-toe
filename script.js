@@ -7,7 +7,30 @@ const displayController = (() => {
     document.querySelector(".player-turn-message").textContent = playerDisplay;
   };
 
-  return { displayMessage, playerDisplayMessage };
+  const player1Score = (displayPlayer1Score) => {
+    document.querySelector(".player1-scores").textContent = displayPlayer1Score;
+  };
+
+  const player2Score = (displayPlayer2Score) => {
+    document.querySelector(".player2-scores").textContent = displayPlayer2Score;
+  };
+
+  const rounds = (displayRound) => {
+    document.querySelector(".round").textContent = displayRound;
+  };
+
+  const winner = (displayWinner) => {
+    document.querySelector(".display-winner").textContent = displayWinner;
+  };
+
+  return {
+    displayMessage,
+    playerDisplayMessage,
+    player1Score,
+    rounds,
+    player2Score,
+    winner,
+  };
 })();
 
 const Gameboard = (() => {
@@ -42,32 +65,40 @@ const Gameboard = (() => {
   };
 })();
 
-const createPlayer = (name, mark) => {
-  return { name, mark };
+const createPlayer = (name, mark, score) => {
+  return { name, mark, score };
 };
 
 const Game = (() => {
   let players = [];
   let currentPlayerIndex;
   let gameOver;
+  let playerOneScore;
+  let playerTwoScore;
+  let round;
 
   const start = () => {
-    restart();
-
     players = [
-      createPlayer(document.querySelector("#player1").value, "X"),
-      createPlayer(document.querySelector("#player2").value, "O"),
+      createPlayer(document.querySelector("#player1").value, "X", 0),
+      createPlayer(document.querySelector("#player2").value, "O", 0),
     ];
 
+    playerOneScore = players[0].score;
+    playerTwoScore = players[1].score;
     currentPlayerIndex = 0;
+    round = 1;
     gameOver = false;
 
     displayController.playerDisplayMessage(
-      `It's your turn ${players[currentPlayerIndex].name}!` +
+      `Your turn ${players[currentPlayerIndex].name}!` +
         " ( " +
         `${players[currentPlayerIndex].mark}` +
         " )"
     );
+
+    displayController.rounds("Round" + " " + 1);
+    displayController.player1Score(players[0].name + ": " + playerOneScore);
+    displayController.player2Score(players[1].name + ": " + playerTwoScore);
 
     Gameboard.render();
 
@@ -84,6 +115,7 @@ const Game = (() => {
     }
 
     let index = parseInt(event.target.id.split("-")[1]);
+
     if (Gameboard.getGameboard()[index] !== "") return;
     Gameboard.update(index, players[currentPlayerIndex].mark);
 
@@ -91,22 +123,53 @@ const Game = (() => {
       checkWInner(Gameboard.getGameboard(), players[currentPlayerIndex].mark)
     ) {
       gameOver = true;
+      nextRoundButton.disabled = false;
       displayController.displayMessage(
         `${players[currentPlayerIndex].name} Won!`
       );
+
+      if (players[currentPlayerIndex].mark === "X") {
+        playerOneScore++;
+        players[currentPlayerIndex].score = playerOneScore;
+      } else {
+        playerTwoScore++;
+        players[currentPlayerIndex].score = playerTwoScore;
+      }
+      displayController.player1Score(players[0].name + ": " + playerOneScore);
+      displayController.player2Score(players[1].name + ": " + playerTwoScore);
     } else if (checkForTie(Gameboard.getGameboard())) {
+      nextRoundButton.disabled = false;
       gameOver = true;
       displayController.displayMessage("It's a Tie!");
     }
 
-    currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
-
     displayController.playerDisplayMessage(
-      `It's your turn ${players[currentPlayerIndex].name}!` +
+      `Your turn ${players[currentPlayerIndex].name}!` +
         " ( " +
         `${players[currentPlayerIndex].mark}` +
         " )"
     );
+    winner();
+    currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+  };
+
+  const winner = () => {
+    if (players[0].score === 3) {
+      gameOver = true;
+      displayController.winner(players[0].name + " " + "is the winner!");
+      playerWon.style.visibility = "visible";
+      nextRoundButton.disabled = true;
+    } else if (players[1].score === 3) {
+      gameOver = true;
+      displayController.winner(players[1].name + " " + "is the winner!");
+      nextRoundButton.disabled = true;
+      playerWon.style.visibility = "visible";
+    }
+  };
+
+  const newGame = () => {
+    restart();
+    Game.start();
   };
 
   const restart = () => {
@@ -114,14 +177,34 @@ const Game = (() => {
       Gameboard.update(i, "");
     }
     gameOver = false;
-    Gameboard.render();
+    currentPlayerIndex = 0;
+    playerOneScore = 0;
+    playerTwoScore = 0;
+    round = 1;
+    players[0].score = 0;
+    players[1].score = 0;
+    displayController.player1Score(players[0].name + ": " + 0);
+    displayController.player2Score(players[1].name + ": " + 0);
     displayController.displayMessage("");
+    Gameboard.render();
+  };
+
+  const nextRound = () => {
+    for (let i = 0; i < 9; i++) {
+      Gameboard.update(i, "");
+    }
+    gameOver = false;
+    round++;
+    displayController.rounds("Round" + " " + round);
   };
 
   return {
     start,
     handleClick,
     restart,
+    winner,
+    nextRound,
+    newGame,
   };
 })();
 
@@ -162,16 +245,42 @@ startButton.addEventListener("click", () => {
   const playerTwo = document.querySelector("#player2");
   const startMessage = document.querySelector(".start-message");
 
-  if (playerOne.value === "") {
+  if (playerOne.value === "" && playerTwo.value === "") {
+    startMessage.textContent = "Enter Player 1 Name and Player 2 Name!";
+  } else if (playerOne.value === "") {
     startMessage.textContent = "Enter Player 1 Name!";
   } else if (playerTwo.value === "") {
     startMessage.textContent = "Enter Player 2 Name!";
   } else {
     Game.start();
+    nextRoundButton.disabled = true;
     modalStart.style.visibility = "hidden";
   }
 });
 
-const playerResult = document.querySelector(".playerResult-modal");
+const newGameButton = document.querySelector(".new-game");
+newGameButton.addEventListener("click", () => {
+  document.querySelector("#player1").value = "";
+  document.querySelector("#player2").value = "";
+  Game.newGame();
+  playerWon.style.visibility = "hidden";
+  modalStart.style.visibility = "visible";
+});
+
+const nextRoundButton = document.querySelector(".next-round");
+nextRoundButton.addEventListener("click", () => {
+  Game.nextRound();
+  nextRoundButton.disabled = true;
+});
+
+const rematchButton = document.querySelector(".rematch");
+rematchButton.addEventListener("click", () => {
+  Game.restart();
+  playerWon.style.visibility = "hidden";
+});
+
 const modalStart = document.querySelector(".start-screen");
-modalStart.style.visibility = "start";
+modalStart.style.visibility = "visible";
+
+const playerWon = document.querySelector(".winner");
+playerWon.style.visibility = "hidden";
