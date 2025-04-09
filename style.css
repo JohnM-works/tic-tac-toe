@@ -16,8 +16,6 @@ body {
     font-family: "Fredericka the Great", serif;
     font-weight: 400;
     font-style: normal;
-
-    
     background-color: RGB(39,76,67);
     border: tan solid 22px;
 	border-top: #bda27e solid 22px;
@@ -154,13 +152,15 @@ body {
 }
 
 .display-winner {
+    text-align: center;
     font-size: 3em;
     color: white;
     margin: 20px;
 }
 
 .display-result {
-    font-size: 30px;
+    text-align: center;
+    font-size: 1.5em;
     color: white;
 }
 
@@ -247,7 +247,7 @@ body {
     text-align: center;
     flex-wrap: wrap;
     border: 1px solid white;
-    width: 100%;
+    width: 80%;
     margin: 20px;
 }
 
@@ -258,8 +258,6 @@ body {
     font-size: 1.5em;
     padding: 20px;
 }
-
-
 
 .gameboard {
     display: grid;
